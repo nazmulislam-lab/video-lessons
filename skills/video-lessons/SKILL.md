@@ -23,6 +23,8 @@ If `next` has no topic and more than one topic has unfinished lessons, ask which
 
 The commands work the same in every agent; only the way you invoke the skill differs (`/video-lessons` in Claude Code, `$video-lessons` in Codex, a plain request in Gemini CLI and others).
 
+<!-- Never write a dollar sign followed by a digit in this file: Claude Code replaces $N with the Nth argument. -->
+
 ## Paths
 
 - Skill folder (the folder holding this file): `SKILL_DIR`. Formats in `SKILL_DIR/formats/`, templates in `SKILL_DIR/templates/`, scripts in `SKILL_DIR/scripts/`. Scripts need only Python 3.8+.
@@ -53,14 +55,14 @@ All transcript work goes through `SKILL_DIR/scripts/fetch_transcript.py`. It rea
 `python3 SKILL_DIR/scripts/fetch_transcript.py list <url> [<url> ...]`
 It expands playlists (needs `yt-dlp`) and prints id, seconds, title, and the cost estimate.
 
-**For more than one video, confirm before spending.** Show a table: title, duration, total duration, estimated cost (~$0.003 per video). Propose batches of about 5 videos or 3 hours. Let the user drop videos. Each batch becomes one `videos/NNNN-<slug>/` folder with one merged plan. Later batches skip concepts earlier batches already covered.
+**For more than one video, confirm before spending.** Show a table: title, duration, total duration, estimated cost (about 0.3 US cents per video). Propose batches of about 5 videos or 3 hours. Let the user drop videos. Each batch becomes one `videos/NNNN-<slug>/` folder with one merged plan. Later batches skip concepts earlier batches already covered.
 
 **1b. Fetch** (after routing, so you know the folder):
 `python3 SKILL_DIR/scripts/fetch_transcript.py fetch <urls> --out ~/Learning/<topic>/videos/NNNN-<slug> --lang en[,<original language>]`
 It writes `transcripts/<id>.md` (30-second paragraphs stamped `[mm:ss]`, chapters from the description at the top) and `meta.json`, then prints a JSON summary.
 
 - **Non-English video:** put the original language in `--lang` (e.g. `--lang bn,en`) so you get the original captions, not YouTube's translation. You translate while writing lessons.
-- **Exit code 3 = some videos have no captions** (listed under `no_captions`). Tell the user, quote the Whisper cost (~$0.012 per minute), and **ask**. Only after a yes, re-run with `--ai-fallback --max-usd <agreed amount>`. Never run it without a yes.
+- **Exit code 3 = some videos have no captions** (listed under `no_captions`). Tell the user, quote the Whisper cost (about 1.2 US cents per minute of video), and **ask**. Only after a yes, re-run with `--ai-fallback --max-usd <agreed amount>`. Never run it without a yes.
 - **No token configured,** but your agent has the Apify MCP server: call the actor `johnvc/YoutubeTranscripts` with `{"youtube_url": [...], "languages": [...], "include_metadata": true}`, save the dataset items to a JSON file, and run `fetch_transcript.py render <items.json> --out <folder>`. Otherwise point the user to the README's "Apify token" section and stop.
 
 ## 2. Route
