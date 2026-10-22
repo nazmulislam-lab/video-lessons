@@ -1,0 +1,12 @@
+{
+  "name": "video-lessons",
+  "owner": { "name": "Md Nazmul Islam" },
+  "description": "Learn from YouTube videos without watching them: transcript-based lessons, quizzes and spaced review.",
+  "plugins": [
+    {
+      "name": "video-lessons",
+      "source": "./",
+      "description": "Turn YouTube videos and playlists into short, quizzed, fact-checked lessons with spaced review."
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Video Lessons"
+  short_description: "Learn a YouTube video without watching it"
+  default_prompt: "Make lessons from this video: "
+policy:
+  allow_implicit_invocation: false

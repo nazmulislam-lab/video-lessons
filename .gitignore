@@ -1,0 +1,8 @@
+.env
+*.env
+!.env.example
+__pycache__/
+*.pyc
+.DS_Store
+# Lessons and progress live in ~/Learning, never in this repo.
+Learning/

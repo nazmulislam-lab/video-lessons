@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{NN}. {Concept}: {Topic}</title>
+<link rel="stylesheet" href="../../../assets/lesson.css">
+</head>
+<body>
+
+<p class="crumbs"><a href="../../../index.html">{Topic}</a> › <a href="../PLAN.md">{Video title}</a> › Lesson {N} of {total}</p>
+<h1>{Concept}</h1>
+<p class="meta">From <a href="https://youtu.be/{id}">{Video title}</a> by {channel} · covers <a class="ts" href="https://youtu.be/{id}?t={s}">{mm:ss}</a>–{mm:ss} · ~10 min</p>
+
+<p class="win">{One sentence: what you can do after this lesson, tied to the mission.}</p>
+
+<h2>{Section}</h2>
+<p>{Explanation. Each claim from the video cites it: <a class="ts" href="https://youtu.be/{id}?t={s}">{mm:ss}</a>}</p>
+
+<!-- Callouts: use only when earned. -->
+<div class="callout correction"><p class="callout-title">⚠ Correction</p><p>{The video said X <a class="ts" href="…">mm:ss</a>. Actually Y (<a href="…">source</a>).}</p></div>
+<div class="callout beyond"><p class="callout-title">➕ Beyond the video</p><p>{What it left out, cited.}</p></div>
+<div class="callout disagree"><p class="callout-title">⚖ Creators disagree</p><p>{A says…, B says…, sources say…}</p></div>
+<div class="callout visual"><p class="callout-title">🎬 Visual-only</p><p>{What's on screen at <a class="ts" href="…">mm:ss</a> and why it matters.}</p></div>
+
+<h2>Check yourself</h2>
+<section class="quiz">
+  <div class="q">
+    <p class="prompt">{Question that makes you retrieve or apply.}</p>
+    <button class="opt" data-why="{Why this is wrong.}">{Option, same word count}</button>
+    <button class="opt" data-correct data-why="{Why this is right.}">{Option, same word count}</button>
+    <button class="opt" data-why="{Why this is wrong.}">{Option, same word count}</button>
+  </div>
+  <p class="score"></p>
+</section>
+
+<p class="try">{One small real task, ideally on the user's own work.}</p>
+
+<footer>
+  <p><strong>Go deeper:</strong> <a href="{best source}">{Best high-trust source}</a> · the video itself: <a href="https://youtu.be/{id}?t={s}">{mm:ss}</a></p>
+  <p><strong>Reference:</strong> <a href="../../../reference/{slug}.html">{Reference doc}</a></p>
+  <p class="ask">Anything unclear? Ask me. I'm your teacher for this.</p>
+  <nav class="pager"><a href="{prev}.html">← {Previous}</a><a href="{next}.html">{Next} →</a></nav>
+</footer>
+
+<script src="../../../assets/quiz.js"></script>
+</body>
+</html>
