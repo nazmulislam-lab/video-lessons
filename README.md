@@ -20,7 +20,7 @@ It is built on Matt Pocock's [`teach`](https://github.com/mattpocock/skills) ski
 
 ## Install
 
-Clone the repo (it's private, so you need to have been given access):
+Clone the repo:
 
 ```bash
 git clone https://github.com/nazmulislam-lab/video-lessons.git
@@ -47,7 +47,7 @@ Inside Claude Code:
 /plugin install video-lessons@video-lessons
 ```
 
-For a private repo, Claude Code needs git access to GitHub (`gh auth login` is enough). Plugin skills are namespaced, so the command is `/video-lessons:video-lessons`.
+Plugin skills are namespaced, so the command is `/video-lessons:video-lessons`.
 
 ### Option C: `npx skills` (Cursor, OpenCode, Windsurf and 70+ other agents)
 
@@ -55,7 +55,7 @@ For a private repo, Claude Code needs git access to GitHub (`gh auth login` is e
 npx skills add nazmulislam-lab/video-lessons -g
 ```
 
-It asks which agents to install to. It needs Node 22+ and git access to the repo.
+It asks which agents to install to. It needs Node 22+.
 
 ### Option D: by hand (including Windows)
 
@@ -140,6 +140,12 @@ install.sh              installer for Claude Code, Codex, Gemini and others
 - Video URLs you submit go to Apify, which runs the scraper under your account.
 - Transcripts, lessons and quiz history stay in `~/Learning`. Nothing is uploaded anywhere.
 - The token file is created with `600` permissions in a `700` folder.
+- Apify runs the transcript actors in its cloud under your account. The actors' authors (`johnvc`, `codepoetry`) never see your token; they only receive the video URLs.
+- Transcripts and web pages are treated as untrusted input. The skill tells the agent never to follow instructions found in a video or web page, and to escape transcript text before it goes into lesson HTML.
+- `fetch_transcript.py` accepts only `youtube.com` / `youtu.be` URLs and passes them to `yt-dlp` after `--`, so a crafted "URL" can't become a command-line option.
+- `install.sh` never deletes a folder it didn't create unless you pass `--force`.
+
+Found a security problem? See [SECURITY.md](SECURITY.md).
 
 ## Troubleshooting
 
@@ -149,7 +155,7 @@ install.sh              installer for Claude Code, Codex, Gemini and others
 | "Apify rejected the token (401)" | Copy the token again from the Apify console; tokens are revoked if you regenerate them |
 | "Playlists need yt-dlp" | `pip install yt-dlp` (or `brew install yt-dlp`, `sudo apt install yt-dlp`) |
 | The skill doesn't show up | Restart the agent. In Gemini CLI, run `/skills reload`; in Codex, `/skills` lists what it found |
-| Lessons don't open | Open `~/Learning/<topic>/index.html` in your browser |
+| Lessons don't open | The agent prints the lesson's full path at the end of every lesson. Open that file, or `~/Learning/<topic>/index.html`, in your browser |
 
 ## Credits
 

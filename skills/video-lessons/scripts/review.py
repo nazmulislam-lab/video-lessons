@@ -12,6 +12,7 @@ $VIDEO_LESSONS_HOME or ~/Learning.
 import json
 import os
 import random
+import re
 import sys
 from datetime import date, timedelta
 from pathlib import Path
@@ -21,6 +22,8 @@ INTERVALS = [1, 3, 7, 21, 60, 120]
 
 
 def load(topic):
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]*", topic) or ".." in topic:
+        sys.exit(f"invalid topic name: {topic!r}")
     path = ROOT / topic / "review.json"
     if not path.exists():
         sys.exit(f"no such topic: {topic} (expected {path})")

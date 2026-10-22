@@ -7,7 +7,7 @@
 #   ./install.sh --gemini        Gemini CLI    -> ~/.gemini/skills
 #   ./install.sh --dir PATH      any other agent that reads SKILL.md folders
 #   ./install.sh --link          symlink instead of copy (for editing this repo)
-#   ./install.sh --force         replace an existing human-touch install
+#   ./install.sh --force         replace a same-named skill this script didn't install
 #   ./install.sh --set-token     store your Apify token in ~/.config/video-lessons/.env
 #   ./install.sh --uninstall     remove the skills from every target above
 set -euo pipefail
@@ -22,7 +22,9 @@ while (($#)); do
     --claude) targets+=("$HOME/.claude/skills") ;;
     --codex) targets+=("$HOME/.agents/skills") ;;
     --gemini) targets+=("$HOME/.gemini/skills") ;;
-    --dir) targets+=("$2"); shift ;;
+    --dir)
+      [[ -n "${2:-}" && "$2" != -* ]] || { echo "--dir needs a folder path" >&2; exit 1; }
+      targets+=("$(cd "$2" 2>/dev/null && pwd || echo "$2")"); shift ;;
     --link) mode=link ;;
     --force) force=1 ;;
     --set-token) set_token=1 ;;
@@ -64,7 +66,7 @@ for target in "${targets[@]}"; do
     fi
     if [[ -e "$dest" || -L "$dest" ]]; then
       ours=0; [[ -L "$dest" || -f "$dest/.installed-by-video-lessons" ]] && ours=1
-      if [[ "$skill" == human-touch && $ours == 0 && $force == 0 ]]; then
+      if [[ $ours == 0 && $force == 0 ]]; then
         echo "kept your existing $dest (use --force to replace it)"
         continue
       fi
